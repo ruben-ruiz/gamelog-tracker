@@ -31,10 +31,10 @@ const Search = ({searchGames}) => {
 
   return (
     <Form className="search-form" onSubmit={e => handleSubmit(e)}>
-      <FormGroup>
+      <FormGroup className="search-input">
         <Input type='text' name='titles' id='titleSearch' placeholder='search games by title' onChange={(e) => setTitle(e.target.value)} />
       </FormGroup>
-      <FormGroup>
+      <FormGroup className="search-dropdown">
         <Input type="select" name="genre-select" id="genreSelect" onChange={(e) => setGenre(e.target.value)}>
           <option>All Genres</option>
           {getGameGenres ? getGameGenres.map((genre, index) => {
@@ -44,7 +44,7 @@ const Search = ({searchGames}) => {
           }) : <></>}
         </Input>
       </FormGroup>
-      <FormGroup>
+      <FormGroup className="search-dropdown">
         <Input type="select" name="platform-select" id="platformSelect" onChange={(e) => setPlatform(e.target.value)}>
           <option>All Platforms</option>
           {getGamePlatforms ? getGamePlatforms.map((platform, index) => {
@@ -54,7 +54,7 @@ const Search = ({searchGames}) => {
           }) : <></>}
         </Input>
       </FormGroup>
-      <Button type="submit">Submit</Button>
+      <Button className="search-submit" type="submit">Submit</Button>
     </Form>
   )
 }

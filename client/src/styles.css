@@ -16,6 +16,27 @@ body {
   background-color: black;
 }
 
+/* GAME SEARCH COMPONENT */
+.search-form {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem;
+}
+
+.search-input {
+  flex: 0 0 40%;
+}
+
+.search-dropdown {
+  flex: 0 0 17%;
+}
+
+.search-submit {
+  flex: 0 0 25%;
+}
+
+/* CARDS GAMES DISPLAY */
+
 .games-display {
   display: inline-flex;
   justify-content: space-around;
