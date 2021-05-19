@@ -37,18 +37,14 @@ app.get('/games', (req, res) => {
     query += `platforms=${platform}`;
   }
 
-  if (query !== '/games?') {
-    ax.get(query)
-    .then(response => {
-      res.send(response.data);
-    })
-    .catch(err => {
-      console.log('err? ', err)
-      res.send(err);
-    })
-  } else res.end()
-
-
+  ax.get(query)
+  .then(response => {
+    res.send(response.data);
+  })
+  .catch(err => {
+    console.log('err? ', err)
+    res.send(err);
+  })
 });
 
 
