@@ -1,8 +1,8 @@
 import React, {useState, useEffect} from 'react';
-import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
+import { Button, Form, FormGroup, Input } from 'reactstrap';
 import axios from 'axios';
 
-const Search = () => {
+const Search = ({searchGames}) => {
   const [getGameGenres, setGameGenres] = useState([]);
   const [getGamePlatforms, setGamePlatforms] = useState([]);
   const [title, setTitle] = useState('');
@@ -23,6 +23,10 @@ const Search = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    let gameTitle = title.split(' ').join('-').toLowerCase();
+    let gameGenre = genre.split(' ').join('-').toLowerCase();
+    let gamePlatform = platform.split(' ').join('-').toLowerCase();
+    searchGames(gameTitle, gameGenre, gamePlatform);
   }
 
   return (
@@ -32,18 +36,20 @@ const Search = () => {
       </FormGroup>
       <FormGroup>
         <Input type="select" name="genre-select" id="genreSelect" onChange={(e) => setGenre(e.target.value)}>
+          <option>All Genres</option>
           {getGameGenres ? getGameGenres.map((genre, index) => {
             return (
-              <option key={index}>{genre.name}</option>
+              <option key={index} value={genre.slug}>{genre.name}</option>
             )
           }) : <></>}
         </Input>
       </FormGroup>
       <FormGroup>
         <Input type="select" name="platform-select" id="platformSelect" onChange={(e) => setPlatform(e.target.value)}>
+          <option>All Platforms</option>
           {getGamePlatforms ? getGamePlatforms.map((platform, index) => {
             return (
-              <option key={index} onClick={() => setPlatform(platform.name)}>{platform.name}</option>
+              <option key={index} value={platform.id}>{platform.name}</option>
             )
           }) : <></>}
         </Input>
