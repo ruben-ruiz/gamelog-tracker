@@ -1,12 +1,14 @@
 import React from 'react';
-import Navbar from './Navbar.jsx';
+import Navigation from './Navigation.jsx';
 import Main from './Main.jsx';
+import Library from './Library.jsx';
 
 function App() {
+  let path = window.location.pathname;
   return (
     <div className="App">
-      <Navbar />
-      <Main />
+      <Navigation />
+      {path === '/library' ? <Library /> : <Main />}
     </div>
   );
 }

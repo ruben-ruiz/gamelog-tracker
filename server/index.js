@@ -5,6 +5,8 @@ const cors = require('cors');
 const axios = require('axios');
 const app = express();
 const port = 3000;
+const db = require('../database');
+const game_controller = require('./controllers/game.js');
 
 let ax = axios.create({
   baseURL: 'https://api.rawg.io/api',
@@ -47,6 +49,14 @@ app.get('/games', (req, res) => {
   })
 });
 
+app.post('/games', (req, res) => {
+  game_controller.add(req, res);
+})
+
+app.delete('/games', (req, res) => {
+  game_controller.delete(req.query, res);
+})
+
 
 app.get('/genres', (req, res) => {
   ax.get('/genres')
@@ -66,6 +76,10 @@ app.get('/platforms', (req, res) => {
   .catch(err => {
     res.send(err);
   })
+})
+
+app.get('/library', (req, res) => {
+  res.send('hi');
 })
 
 app.listen(port, () => { console.log(`server listening on port ${port} `)});
