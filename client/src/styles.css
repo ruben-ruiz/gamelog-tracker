@@ -13,7 +13,7 @@
 body {
   box-sizing: border-box;
   position: relative;
-  background-color: black;
+  background-color: #2A2347;
 }
 
 .navbar {
@@ -77,4 +77,53 @@ body {
 
 .card-btn-yellow {
   background-color: yellow;
+}
+
+/* LIBRARY */
+.library {
+  display: flex;
+  justify-content: space-between;
+}
+
+.library h2 {
+  color: white;
+}
+
+.backlog {
+  width: 33%;
+  display: inline-flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 2rem;
+  padding: 3rem;
+}
+
+.backlog .card {
+  width: 100%;
+}
+
+.playing {
+  width: 33%;
+  display: inline-flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 2rem;
+  padding: 3rem;
+}
+
+.playing .card {
+  width: 100%;
+}
+
+.completed {
+  width: 33%;
+  display: inline-flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 2rem;
+  padding: 3rem;
+}
+
+.completed .card {
+  width: 100%;
 }

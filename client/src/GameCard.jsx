@@ -62,8 +62,14 @@ const GameCard = ({game}) => {
     }
   }
 
-  //overwriting game.genres to be a string
-  let genres = (game.genres).map(genre => genre.name).join(', ');
+  //overwriting game.genres to be a string if it's an array
+  //component is used for library and games 'search' view, stored in database as string
+  //comes from API as an array
+  let genres = game.genres;
+
+  if (Array.isArray(game.genres)) {
+    genres = (game.genres).map(genre => genre.name).join(', ');
+  }
 
   return (
     <Card>
