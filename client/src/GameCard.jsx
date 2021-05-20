@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   Card, CardImg, CardText, CardBody,
   CardTitle, Button
@@ -6,11 +6,39 @@ import {
 import axios from 'axios';
 
 const GameCard = ({game}) => {
-  const [backlog, setBacklog] = useState(false);
+  const [logStatus, logSetStatus] = useState('');
+  const [classStatus, classSetStatus] = useState('');
+
+  useEffect(() => {
+    let status = '';
+    let statusClass = 'card-btn ';
+
+    if (game.status === 'backlog') {
+      status = 'Remove From Backlog';
+      statusClass += 'card-btn-red';
+      logSetStatus(status);
+      classSetStatus(statusClass);
+    } else if (game.status === 'completed disabled') {
+      status = 'Completed';
+      statusClass += 'card-btn-green';
+      logSetStatus(status);
+      classSetStatus(statusClass);
+    } else if (game.status === 'playing') {
+      status = 'Playing';
+      statusClass += 'card-btn-yellow disabled';
+      logSetStatus(status);
+      classSetStatus(statusClass);
+    } else {
+      status = 'Add to Backlog';
+      statusClass += 'card-btn-grey';
+      logSetStatus(status);
+      classSetStatus(statusClass);
+    }
+  }, [game.status])
 
   function addBacklog () {
-    if (!backlog) {
-      axios.post('http://localhost:3000/games', {
+    if (logStatus === 'Add to Backlog') {
+      axios.post('http://localhost:3000/library', {
         id: game.id,
         slug: game.slug,
         name: game.name,
@@ -21,19 +49,21 @@ const GameCard = ({game}) => {
         genres: genres,
         status: 'backlog'
       })
-      .then(setBacklog(!backlog))
+      .then(logSetStatus('Remove From Backlog'))
+      .then(classSetStatus('card-btn card-btn-red'))
       .catch(err => console.log(err));
-    } else {
-      axios.delete('http://localhost:3000/games', {
+    } else if (logStatus === 'Remove From Backlog') {
+      axios.delete('http://localhost:3000/library', {
         params: {id: game.id}
       })
-      .then(setBacklog(!backlog))
+      .then(logSetStatus('Add to Backlog'))
+      .then(classSetStatus('card-btn card-btn-grey'))
       .catch(err => console.log(err))
     }
   }
 
   //overwriting game.genres to be a string
-  let genres = (game.genres).map(genre => genre.name).join(', ')
+  let genres = (game.genres).map(genre => genre.name).join(', ');
 
   return (
     <Card>
@@ -43,7 +73,8 @@ const GameCard = ({game}) => {
         <CardText>Released: {game.released}</CardText>
         <CardText>Rating: {game.rating}/{game.rating_top}</CardText>
         <CardText>{genres}</CardText>
-        <Button className={`card-btn ${backlog ? 'card-btn-true': 'card-btn-false'}`} onClick={() => addBacklog()}>{backlog ? 'Remove from Backlog' : 'Add to Backlog'}</Button>
+        <Button className={classStatus} onClick={() => addBacklog()}>{logStatus}
+        </Button>
       </CardBody>
     </Card>
   );

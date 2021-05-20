@@ -64,3 +64,17 @@ body {
 .card img {
   height: 50%;
 }
+
+/* BUTTONS */
+
+.card-btn-red {
+  background-color: red;
+}
+
+.card-btn-green {
+  background-color: green;
+}
+
+.card-btn-yellow {
+  background-color: yellow;
+}

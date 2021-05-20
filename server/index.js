@@ -49,11 +49,15 @@ app.get('/games', (req, res) => {
   })
 });
 
-app.post('/games', (req, res) => {
+app.get('/library', (req, res) => {
+  game_controller.getAll(req, res);
+})
+
+app.post('/library', (req, res) => {
   game_controller.add(req, res);
 })
 
-app.delete('/games', (req, res) => {
+app.delete('/library', (req, res) => {
   game_controller.delete(req.query, res);
 })
 
@@ -76,10 +80,6 @@ app.get('/platforms', (req, res) => {
   .catch(err => {
     res.send(err);
   })
-})
-
-app.get('/library', (req, res) => {
-  res.send('hi');
 })
 
 app.listen(port, () => { console.log(`server listening on port ${port} `)});
