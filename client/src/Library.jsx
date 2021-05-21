@@ -32,15 +32,15 @@ const Library= () => {
 
   return (
     <div className="library">
-      <div className="backlog">
+      <div className="library-category backlog">
         <h2>Backlog</h2>
         {backlog ? backlog.map((game,index) => <GameCard game={game} key={index} />) : <></>}
       </div>
-      <div className="playing">
+      <div className="library-category playing">
         <h2>Currently Playing</h2>
         {playing ? playing.map((game,index) => <GameCard game={game} key={index} />) : <></>}
       </div>
-      <div className="completed">
+      <div className="library-category completed">
         <h2>Completed</h2>
       {completed ? completed.map((game,index) => <GameCard game={game} key={index} />) : <></>}
       </div>

@@ -65,6 +65,12 @@ body {
   height: 50%;
 }
 
+.card-body {
+  text-align: center;
+  padding: 0;
+  margin: .5rem 0;
+}
+
 /* BUTTONS */
 
 .card-btn-red {
@@ -89,20 +95,37 @@ body {
   color: white;
 }
 
-.backlog {
+.library-category {
   width: 33%;
-  display: inline-flex;
-  justify-content: space-around;
-  flex-wrap: wrap;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 3rem;
+}
+
+.library-category .card {
+  width: 50%;
+  height: 25rem;
+}
+
+/* .backlog {
+  width: 33%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
   gap: 2rem;
   padding: 3rem;
 }
 
 .backlog .card {
-  width: 100%;
-}
+  width: 50%;
+  height: 25rem;
+} */
 
-.playing {
+/* .playing {
   width: 33%;
   display: inline-flex;
   justify-content: space-around;
@@ -112,7 +135,7 @@ body {
 }
 
 .playing .card {
-  width: 100%;
+  width: 75%;
 }
 
 .completed {
@@ -125,5 +148,5 @@ body {
 }
 
 .completed .card {
-  width: 100%;
-}
+  width: 75%;
+} */
