@@ -38,7 +38,7 @@ const GameCard = ({game}) => {
 
   function addBacklog () {
     if (logStatus === 'Add to Backlog') {
-      axios.post('http://localhost:3000/library', {
+      axios.post('/api/library', {
         id: game.id,
         slug: game.slug,
         name: game.name,
@@ -53,7 +53,7 @@ const GameCard = ({game}) => {
       .then(classSetStatus('card-btn card-btn-red'))
       .catch(err => console.log(err));
     } else if (logStatus === 'Remove From Backlog') {
-      axios.delete('http://localhost:3000/library', {
+      axios.delete('/api/library', {
         params: {id: game.id}
       })
       .then(logSetStatus('Add to Backlog'))

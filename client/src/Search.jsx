@@ -10,13 +10,13 @@ const Search = ({searchGames}) => {
   const [platform, setPlatform] = useState('');
 
   useEffect(() => {
-    axios.get('http://localhost:3000/genres')
+    axios.get('/api/genres')
     .then(response => setGameGenres(response.data))
     .catch(err => console.log('err'));
   }, []);
 
   useEffect(() => {
-    axios.get('http://localhost:3000/platforms')
+    axios.get('/api/platforms')
     .then(response => setGamePlatforms(response.data))
     .catch(err => console.log('err'));
   }, []);

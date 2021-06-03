@@ -8,7 +8,7 @@ const Library= () => {
   const [completed, setCompleted] = useState([]);
 
   useEffect(() => {
-    axios.get('http://localhost:3000/library')
+    axios.get('/api/library')
     .then(response => response.data)
     .then(async data => {
       let backlogArr = [];

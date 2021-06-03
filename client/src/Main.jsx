@@ -11,7 +11,7 @@ const Main = () => {
   }, [])
 
   function searchGames(title, genre, platform) {
-    axios.get('http://localhost:3000/games', {
+    axios.get('/api/games', {
       params: {
         query: title,
         genres: genre,
