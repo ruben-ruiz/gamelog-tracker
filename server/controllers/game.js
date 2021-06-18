@@ -14,6 +14,20 @@ exports.add = (req, res) => {
 
   newGame.save((err, game) => {
     if (err) {
+      console.log(err);
+      res.send(err);
+    }
+    res.end();
+  })
+  return;
+};
+
+exports.update = (req, res) => {
+  const { id } = req.body;
+  const { status } = req.body;
+
+  Game.updateOne({ id: id }, { status: status }, (err, item) => {
+    if (err) {
       res.send(err);
     }
     res.end();

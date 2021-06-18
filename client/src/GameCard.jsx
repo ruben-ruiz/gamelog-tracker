@@ -32,29 +32,38 @@ const GameCard = ({game}) => {
   }
 
   function changeStatus (e) {
-    let status = e.currentTarget.textContent;
+    let selected = e.currentTarget.textContent;
 
-    if (status === 'Remove') {
+    if (gameStatus === '') {
+      if (selected !== 'Remove') {
+        axios.post('/api/library', {
+          id: game.id,
+          slug: game.slug,
+          name: game.name,
+          released: game.released,
+          background_image: game.background_image,
+          rating: game.rating,
+          rating_top: game.rating_top,
+          genres: genres,
+          status: selected
+        })
+        .then(setStatus(selected))
+        .catch(err => console.log(err));
+      } else return;
+    } else if (selected === 'Remove') {
       axios.delete('/api/library', {
         params: {
           id: game.id
         }
       })
-      .then(setStatus(status))
+      .then(setStatus(selected))
       .catch(err => console.log(err));
     } else {
-      axios.post('/api/library', {
-        id: game.id,
-        slug: game.slug,
-        name: game.name,
-        released: game.released,
-        background_image: game.background_image,
-        rating: game.rating,
-        rating_top: game.rating_top,
-        genres: genres,
-        status: status
+      axios.put('/api/library', {
+          id: game.id,
+          status: selected,
       })
-      .then(setStatus(status))
+      .then(setStatus(selected))
       .catch(err => console.log(err));
     }
   }

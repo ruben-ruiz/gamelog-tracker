@@ -71,6 +71,10 @@ app.post('/api/library', (req, res) => {
   game_controller.add(req, res);
 })
 
+app.put('/api/library', (req, res) => {;
+  game_controller.update(req, res);
+})
+
 app.delete('/api/library', (req, res) => {
   game_controller.delete(req.query, res);
 })
