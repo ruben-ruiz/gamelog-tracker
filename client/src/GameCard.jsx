@@ -1,43 +1,50 @@
 import React, {useState, useEffect} from 'react';
 import {
   Card, CardImg, CardText, CardBody,
-  CardTitle, Button
+  CardTitle, Dropdown, DropdownToggle, DropdownMenu, DropdownItem
 } from 'reactstrap';
 import axios from 'axios';
 
 const GameCard = ({game}) => {
-  const [logStatus, logSetStatus] = useState('');
-  const [classStatus, classSetStatus] = useState('');
+  const [gameStatus, setGameStatus] = useState('');
+  const [className, setClassName] = useState('');
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+
+  const toggle = () => setDropdownOpen(prevState => !prevState);
 
   useEffect(() => {
-    let status = '';
-    let statusClass = 'card-btn ';
-
-    if (game.status === 'backlog') {
-      status = 'Remove From Backlog';
-      statusClass += 'card-btn-red';
-      logSetStatus(status);
-      classSetStatus(statusClass);
-    } else if (game.status === 'completed disabled') {
-      status = 'Completed';
-      statusClass += 'card-btn-green';
-      logSetStatus(status);
-      classSetStatus(statusClass);
-    } else if (game.status === 'playing') {
-      status = 'Playing';
-      statusClass += 'card-btn-yellow disabled';
-      logSetStatus(status);
-      classSetStatus(statusClass);
-    } else {
-      status = 'Add to Backlog';
-      statusClass += 'card-btn-grey';
-      logSetStatus(status);
-      classSetStatus(statusClass);
-    }
+    setStatus(game.status)
   }, [game.status])
 
-  function addBacklog () {
-    if (logStatus === 'Add to Backlog') {
+  useEffect(() => {
+    setStatus(gameStatus)
+  }, [gameStatus])
+
+  function setStatus (status) {
+    let statusClass = 'card-btn ';
+
+    if (!status || status === 'Remove') {
+      setGameStatus('Add to Library');
+      setClassName(statusClass);
+    } else {
+      statusClass += `card-btn-${status}`;
+      setGameStatus(status);
+      setClassName(statusClass);
+    }
+  }
+
+  function changeStatus (e) {
+    let status = e.currentTarget.textContent;
+
+    if (status === 'Remove') {
+      axios.delete('/api/library', {
+        params: {
+          id: game.id
+        }
+      })
+      .then(setStatus(status))
+      .catch(err => console.log(err));
+    } else {
       axios.post('/api/library', {
         id: game.id,
         slug: game.slug,
@@ -47,18 +54,10 @@ const GameCard = ({game}) => {
         rating: game.rating,
         rating_top: game.rating_top,
         genres: genres,
-        status: 'backlog'
+        status: status
       })
-      .then(logSetStatus('Remove From Backlog'))
-      .then(classSetStatus('card-btn card-btn-red'))
+      .then(setStatus(status))
       .catch(err => console.log(err));
-    } else if (logStatus === 'Remove From Backlog') {
-      axios.delete('/api/library', {
-        params: {id: game.id}
-      })
-      .then(logSetStatus('Add to Backlog'))
-      .then(classSetStatus('card-btn card-btn-grey'))
-      .catch(err => console.log(err))
     }
   }
 
@@ -79,8 +78,19 @@ const GameCard = ({game}) => {
         <CardText>Released: {game.released}</CardText>
         <CardText>Rating: {game.rating}/{game.rating_top}</CardText>
         <CardText>{genres}</CardText>
-        <Button className={classStatus} onClick={() => addBacklog()}>{logStatus}
-        </Button>
+        <Dropdown isOpen={dropdownOpen} toggle={toggle} direction="up">
+          <DropdownToggle caret className={className}>{gameStatus}</DropdownToggle>
+          <DropdownMenu>
+            <DropdownItem onClick={(e) => changeStatus(e)}>Backlog</DropdownItem>
+            <DropdownItem onClick={(e) => changeStatus(e)}>Playing</DropdownItem>
+            <DropdownItem onClick={(e) => changeStatus(e)}>Completed</DropdownItem>
+            {
+              gameStatus !== 'Add to Library' ?
+              <DropdownItem onClick={(e) => changeStatus(e)}>Remove</DropdownItem> :
+              <></>
+            }
+          </DropdownMenu>
+        </Dropdown>
       </CardBody>
     </Card>
   );

@@ -73,16 +73,16 @@ body {
 
 /* BUTTONS */
 
-.card-btn-red {
-  background-color: red;
+.card-btn-Backlog {
+  background-color: blue;
 }
 
-.card-btn-green {
+.card-btn-Completed {
   background-color: green;
 }
 
-.card-btn-yellow {
-  background-color: yellow;
+.card-btn-Playing {
+  background-color: orange;
 }
 
 /* LIBRARY */
