@@ -15,11 +15,11 @@ const Library= () => {
       let playingArr = [];
       let completedArr = [];
       for await (let game of data) {
-        if (game.status === 'backlog') {
+        if (game.status === 'Backlog') {
           backlogArr.push(game);
-        } else if (game.status === 'playing') {
+        } else if (game.status === 'Playing') {
           playingArr.push(game);
-        } else if (game.status === 'completed') {
+        } else if (game.status === 'Completed') {
           completedArr.push(game);
         }
       }

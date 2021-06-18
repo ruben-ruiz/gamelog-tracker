@@ -16,12 +16,10 @@ const GameCard = ({game}) => {
     setStatus(game.status)
   }, [game.status])
 
-  useEffect(() => {
-    setStatus(gameStatus)
-  }, [gameStatus])
-
   function setStatus (status) {
     let statusClass = 'card-btn ';
+
+    console.log(`${game.id} ${status}`)
 
     if (!status || status === 'Remove') {
       setGameStatus('Add to Library');
