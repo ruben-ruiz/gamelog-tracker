@@ -19,8 +19,6 @@ const GameCard = ({game}) => {
   function setStatus (status) {
     let statusClass = 'card-btn ';
 
-    console.log(`${game.id} ${status}`)
-
     if (!status || status === 'Remove') {
       setGameStatus('Add to Library');
       setClassName(statusClass);
@@ -33,8 +31,7 @@ const GameCard = ({game}) => {
 
   function changeStatus (e) {
     let selected = e.currentTarget.textContent;
-
-    if (gameStatus === '') {
+    if (gameStatus === '' || gameStatus === 'Add to Library') {
       if (selected !== 'Remove') {
         axios.post('/api/library', {
           id: game.id,

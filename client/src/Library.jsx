@@ -7,26 +7,44 @@ const Library= () => {
   const [playing, setPlaying] = useState([]);
   const [completed, setCompleted] = useState([]);
 
+  // useEffect(() => {
+  //   axios.get('/api/library')
+  //   .then(response => console.log(response.data))
+  //   // .then(async data => {
+  //   //   let backlogArr = [];
+  //   //   let playingArr = [];
+  //   //   let completedArr = [];
+  //   //   for await (let game of data) {
+  //   //     if (game.status === 'Backlog') {
+  //   //       backlogArr.push(game);
+  //   //     } else if (game.status === 'Playing') {
+  //   //       playingArr.push(game);
+  //   //     } else if (game.status === 'Completed') {
+  //   //       completedArr.push(game);
+  //   //     }
+  //   //   }
+  //   //   setBacklog(backlogArr);
+  //   //   setPlaying(playingArr);
+  //   //   setCompleted(completedArr);
+  //   // })
+  //   .catch(err => console.log(err))
+  // }, [])
+
   useEffect(() => {
-    axios.get('/api/library')
-    .then(response => response.data)
-    .then(async data => {
-      let backlogArr = [];
-      let playingArr = [];
-      let completedArr = [];
-      for await (let game of data) {
-        if (game.status === 'Backlog') {
-          backlogArr.push(game);
-        } else if (game.status === 'Playing') {
-          playingArr.push(game);
-        } else if (game.status === 'Completed') {
-          completedArr.push(game);
-        }
-      }
-      setBacklog(backlogArr);
-      setPlaying(playingArr);
-      setCompleted(completedArr);
-    })
+    axios.get('/api/library/getBacklog')
+    .then(response => setBacklog(response.data))
+    .catch(err => console.log(err))
+  }, [])
+
+  useEffect(() => {
+    axios.get('/api/library/getPlaying')
+    .then(response => setPlaying(response.data))
+    .catch(err => console.log(err))
+  }, [])
+
+  useEffect(() => {
+    axios.get('/api/library/getCompleted')
+    .then(response => setCompleted(response.data))
     .catch(err => console.log(err))
   }, [])
 
