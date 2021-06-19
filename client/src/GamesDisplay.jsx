@@ -13,22 +13,6 @@ const GamesDisplay = ({games}) => {
     .catch(err => console.log(err))
   }, [])
 
-  // useEffect(() => {
-  //   const scrolling_function = () => {
-  //       if((window.innerHeight + window.scrollY) >= document.body.offsetHeight-10){
-  //           axios.get('/api/games/next', {
-  //             params: {
-  //               query: games.next,
-  //             }
-  //           })
-  //           .then(response => games.results.concat(response.data))
-  //           .catch(err => console.log(err))
-  //           window.removeEventListener('scroll',scrolling_function)
-  //       }
-  //   }
-  //   window.addEventListener('scroll', scrolling_function);
-  // }, [])
-
   return (
     <div className="games-display">
       {isBusy ? <></> :
