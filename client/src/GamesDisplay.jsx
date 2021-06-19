@@ -17,14 +17,16 @@ const GamesDisplay = ({games}) => {
     <div className="games-display">
       {isBusy ? <></> :
         (games.results).map((game,index) => {
-          for (let i = 0; i < backlog.length; i++) {
-            if (backlog[i].id === game.id) {
-              game.status = backlog[i].status;
-              return <GameCard game={game} key={index}/>
+          if (game) {
+            for (let i = 0; i < backlog.length; i++) {
+              if (backlog[i].id === game.id) {
+                game.status = backlog[i].status;
+                return <GameCard game={game} key={index}/>
+              }
             }
+            game.status = ''
+            return <GameCard game={game} key={index}/>
           }
-          game.status = ''
-          return <GameCard game={game} key={index}/>
         })
       }
     </div>
