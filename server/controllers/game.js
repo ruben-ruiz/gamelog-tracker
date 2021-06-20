@@ -9,6 +9,33 @@ exports.getAll = (req, res) => {
   })
 };
 
+exports.getBacklog = (req, res) => {
+  Game.find({status: 'Backlog'}, (err, item) => {
+    if (err) {
+      res.send(err);
+    }
+    res.json(item);
+  })
+}
+
+exports.getPlaying = (req, res) => {
+  Game.find({status: 'Playing'}, (err, item) => {
+    if (err) {
+      res.send(err);
+    }
+    res.json(item);
+  })
+}
+
+exports.getCompleted = (req, res) => {
+  Game.find({status: 'Completed'}, (err, item) => {
+    if (err) {
+      res.send(err);
+    }
+    res.json(item);
+  })
+}
+
 exports.add = (req, res) => {
   let newGame = new Game(req.body);
 

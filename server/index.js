@@ -5,8 +5,11 @@ const cors = require('cors');
 const axios = require('axios');
 const app = express();
 const port = 5000;
+const jwt = require('jsonwebtoken');
+const {OAuth2Client} = require('google-auth-library');
 const db = require('../database');
 const game_controller = require('./controllers/game.js');
+const user_controller = require('./controllers/user.js');
 
 let ax = axios.create({
   baseURL: 'https://api.rawg.io/api',
@@ -19,6 +22,10 @@ let ax = axios.create({
 app.use(express.json());
 app.use(cors());
 // app.use(express.static('client/build'));
+
+app.post('/api/googlelogin', (req, res) => {
+  user_controller.googlelogin(req, res);
+})
 
 app.get('/api/games', (req, res) => {
   let title = req.query.query || '';
@@ -51,7 +58,6 @@ app.get('/api/games', (req, res) => {
 
 app.get('/api/games/next', (req, res) => {
   let query = req.query.query || '';
-  console.log(query);
 
   ax.get(query)
   .then(response => {
@@ -62,10 +68,6 @@ app.get('/api/games/next', (req, res) => {
     res.send(err);
   })
 });
-
-app.get('/api/library', (req, res) => {
-  game_controller.getAll(req, res);
-})
 
 app.post('/api/library', (req, res) => {
   game_controller.add(req, res);
@@ -79,6 +81,10 @@ app.delete('/api/library', (req, res) => {
   game_controller.delete(req.query, res);
 })
 
+app.get('/api/library/:status', (req, res) => {
+  let status = req.params.status || 'getAll';
+  game_controller[status](req, res);
+})
 
 app.get('/api/genres', (req, res) => {
   ax.get('/genres')

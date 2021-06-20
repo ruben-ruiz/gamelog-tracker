@@ -8,6 +8,7 @@ import {
   NavItem,
   NavLink
 } from 'reactstrap';
+import GoogleLogin from './GoogleLogin.jsx';
 
 const Navigation = (props) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -27,6 +28,7 @@ const Navigation = (props) => {
             <NavLink href="/library">Library</NavLink>
           </NavItem>
         </Nav>
+        <GoogleLogin />
       </Collapse>
     </Navbar>
   );
