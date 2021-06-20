@@ -26,7 +26,7 @@ const GamesDisplay = ({games}) => {
             }
             game.status = ''
             return <GameCard game={game} key={index}/>
-          }
+          } else return <></>
         })
       }
     </div>

@@ -5,29 +5,35 @@ import {
 } from 'reactstrap';
 import axios from 'axios';
 
-const GameCard = ({game}) => {
+const GameCard = ({game, libraryCard}) => {
   const [gameStatus, setGameStatus] = useState('');
   const [className, setClassName] = useState('');
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const toggle = () => setDropdownOpen(prevState => !prevState);
 
-  useEffect(() => {
-    setStatus(game.status)
-  }, [game.status])
-
-  function setStatus (status) {
+  const setStatus = React.useCallback((status) => {
     let statusClass = 'card-btn ';
 
     if (!status || status === 'Remove') {
       setGameStatus('Add to Library');
       setClassName(statusClass);
+      if (libraryCard) {
+        libraryCard(game.status, '');
+      }
     } else {
       statusClass += `card-btn-${status}`;
       setGameStatus(status);
       setClassName(statusClass);
+      if (libraryCard) {
+        libraryCard(game.status, status);
+      }
     }
-  }
+  }, [game.status, libraryCard]);
+
+  useEffect(() => {
+    setStatus(game.status)
+  }, [game.status, setStatus])
 
   function changeStatus (e) {
     let selected = e.currentTarget.textContent;
