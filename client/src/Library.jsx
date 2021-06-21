@@ -19,7 +19,7 @@ const Library= () => {
   function getPlaying() {
     axios.get('/api/library/getPlaying')
     .then(response => {
-      if (Array.isArray(response.data)) setBacklog(response.data);
+      if (Array.isArray(response.data)) setPlaying(response.data);
       else throw new Error('not logged in');
     })
     .catch(err => console.log(err))
@@ -28,7 +28,7 @@ const Library= () => {
   function getCompleted() {
     axios.get('/api/library/getCompleted')
     .then(response => {
-      if (Array.isArray(response.data)) setBacklog(response.data);
+      if (Array.isArray(response.data)) setCompleted(response.data);
       else throw new Error('not logged in');
     })
     .catch(err => console.log(err))
@@ -64,15 +64,15 @@ const Library= () => {
     <div className="library">
       <div className="library-category backlog">
         <h2>Backlog</h2>
-        {backlog.length > 0 ? backlog.map((game,index) => <GameCard game={game} key={index} libraryCard={handleChange} />) : <></>}
+        {backlog ? backlog.map((game,index) => <GameCard game={game} key={index} libraryCard={handleChange} />) : <></>}
       </div>
       <div className="library-category playing">
         <h2>Currently Playing</h2>
-        {playing.length > 0 ? playing.map((game,index) => <GameCard game={game} key={index} libraryCard={handleChange} />) : <></>}
+        {playing ? playing.map((game,index) => <GameCard game={game} key={index} libraryCard={handleChange} />) : <></>}
       </div>
       <div className="library-category completed">
         <h2>Completed</h2>
-      {completed.length > 0 ? completed.map((game,index) => <GameCard game={game} key={index} libraryCard={handleChange} />) : <></>}
+        {completed ? completed.map((game,index) => <GameCard game={game} key={index} libraryCard={handleChange} />) : <></>}
       </div>
     </div>
   )
