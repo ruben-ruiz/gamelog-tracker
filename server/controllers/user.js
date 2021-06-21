@@ -10,7 +10,7 @@ exports.googlelogin = (req, res) => {
 
   client.verifyIdToken({idToken: tokenId, audience: '742413594674-i998hv5n1t54g1m1pi2n3brc6cpuhpdh.apps.googleusercontent.com'})
   .then(response => {
-    const {email_verified, name, email} = response.payload;
+    const {email_verified, name, email, picture} = response.payload;
 
     if (email_verified) {
       User.findOne({email}).exec((err, user) => {
@@ -21,15 +21,15 @@ exports.googlelogin = (req, res) => {
         } else {
           if (user) {
             const token = jwt.sign({_id: user._id}, process.env.JWT_SIGNIN_KEY, {expiresIn: '7d'});
-            const {_id, name, email} = user;
-
+            const {_id, name, email, picture} = user;
+            req.session.userId = _id;
             res.json({
               token,
-              user: {_id, name, email}
+              user: {_id, name, email, picture}
             })
           } else {
             let password = email+process.env.JWT_SIGNIN_KEY;
-            let newUser = new User({name, email, password});
+            let newUser = new User({name, email, password, picture});
             newUser.save((err, data) => {
               if (err) {
                 return res.status(400).json({
@@ -38,11 +38,11 @@ exports.googlelogin = (req, res) => {
               }
 
               const token = jwt.sign({_id: data._id}, process.env.JWT_SIGNIN_KEY, {expiresIn: '7d'});
-              const {_id, name, email} = data;
-
+              const {_id, name, email, picture} = data;
+              req.session.userId = _id;
               res.json({
                 token,
-                user: {_id, name, email}
+                user: {_id, name, email, picture}
               })
             })
           }
@@ -51,3 +51,117 @@ exports.googlelogin = (req, res) => {
     }
   })
 }
+
+exports.getAll = (req, res) => {
+  let userId = req.session.userId;
+  User.findById(userId, (err, user) => {
+    if (err) {
+      res.send(err);
+    }
+    if (user === null) res.send('Not logged in');
+    else {
+      let games = user.library;
+      res.json(games)
+    }
+  })
+};
+
+exports.getBacklog = (req, res) => {
+  let userId = req.session.userId;
+  User.findById(userId, (err, user) => {
+    if (err) {
+      res.send(err);
+    }
+    if (user === null) res.send('Not logged in');
+    else {
+      let games = user.library.filter((game) => game.status === 'Backlog');
+      res.json(games);
+    }
+  })
+}
+
+exports.getPlaying = (req, res) => {
+  let userId = req.session.userId;
+  User.findById(userId, (err, user) => {
+    if (err) {
+      res.send(err);
+    }
+    if (user === null) res.send('Not logged in');
+    else {
+      let games = user.library.filter((game) => game.status === 'Playing');
+      res.json(games);
+    }
+  })
+}
+
+exports.getCompleted = (req, res) => {
+  let userId = req.session.userId;
+  User.findById(userId, (err, user) => {
+    if (err) {
+      res.send(err);
+    }
+    if (user === null) res.send('Not logged in');
+    else {
+      let games = user.library.filter((game) => game.status === 'Completed');
+      res.json(games);
+    }
+  })
+}
+
+exports.add = (req, res) => {
+  let userId = req.session.userId;
+  User.findById(userId, (err, user) => {
+    let newGame = req.body;
+    if (err) {
+      res.send(err);
+    }
+    if (user === null) res.send('Not logged in');
+    else {
+      user.library.push(newGame);
+      user.save((err) => {
+        if (err) res.status(400);
+        console.log('success!');
+        res.end();
+      })
+    }
+  })
+};
+
+exports.update = (req, res) => {
+  const { id } = req.body;
+  const { status } = req.body;
+  let userId = req.session.userId;
+  User.findById(userId, (err, user) => {
+    if (err) {
+      res.send(err);
+    }
+    if (user === null) res.send('Not logged in');
+    else {
+      let updateGame = user.library.id(id);
+      updateGame.set(updateGame.status = status)
+      user.save((err) => {
+        if (err) res.status(400);
+        console.log('success!');
+        res.end();
+      })
+    }
+  })
+};
+
+exports.delete = (req, res) => {
+  let userId = req.session.userId;
+  User.findById(userId, (err, user) => {
+    if (err) {
+      res.send(err);
+    }
+    if (user === null) res.send('Not logged in');
+    else {
+      user.library.id(id).remove();
+      user.save((err) => {
+        if (err) res.status(400);
+        console.log('success!');
+        res.end();
+      })
+    }
+  })
+};

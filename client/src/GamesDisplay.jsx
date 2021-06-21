@@ -8,7 +8,10 @@ const GamesDisplay = ({games}) => {
 
   useEffect(() => {
     axios.get('/api/library/getAll')
-    .then(response => setBacklog(response.data))
+    .then(response => {
+      if (Array.isArray(response.data)) setBacklog(response.data);
+      else throw new Error('not logged in');
+    })
     .then(setBusy(false))
     .catch(err => console.log(err))
   }, [])

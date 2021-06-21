@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   Collapse,
   Navbar,
@@ -9,9 +9,27 @@ import {
   NavLink
 } from 'reactstrap';
 import GoogleLogin from './GoogleLogin.jsx';
+import GoogleLogout from './GoogleLogout.jsx';
 
 const Navigation = (props) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isLoggedIn, setLoggedIn] = useState(false);
+  const [userImage, setUserImage] = useState('');
+
+  const checkLogin = React.useCallback((img) => {
+    if (img) {
+      setUserImage(img);
+      setLoggedIn(true);
+    } else {
+      setUserImage('');
+      setLoggedIn(false);
+      // window.location.replace('/');
+    }
+  }, []);
+
+  useEffect(() => {
+    checkLogin();
+  }, [checkLogin]);
 
   const toggle = () => setIsOpen(!isOpen);
 
@@ -28,7 +46,9 @@ const Navigation = (props) => {
             <NavLink href="/library">Library</NavLink>
           </NavItem>
         </Nav>
-        <GoogleLogin />
+        { isLoggedIn
+          ? <GoogleLogout userImage={userImage} checkLogin={checkLogin} />
+          : <GoogleLogin checkLogin={checkLogin} />}
       </Collapse>
     </Navbar>
   );

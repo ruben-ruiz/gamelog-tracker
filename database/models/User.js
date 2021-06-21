@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const Games = require('./Game.js');
 
 const userSchema = new mongoose.Schema({
   name: {
@@ -17,7 +18,12 @@ const userSchema = new mongoose.Schema({
   password: {
     type: String,
     required: true,
-  }
+  },
+  picture: {
+    type: String,
+    required: true,
+  },
+  library: [Games]
 }, {timestamps: true});
 
 const User = mongoose.model('User', userSchema);

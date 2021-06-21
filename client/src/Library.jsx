@@ -9,19 +9,28 @@ const Library= () => {
 
   function getBacklog() {
     axios.get('/api/library/getBacklog')
-    .then(response => setBacklog(response.data))
+    .then(response => {
+      if (Array.isArray(response.data)) setBacklog(response.data);
+      else throw new Error('not logged in');
+    })
     .catch(err => console.log(err))
   }
 
   function getPlaying() {
     axios.get('/api/library/getPlaying')
-    .then(response => setPlaying(response.data))
+    .then(response => {
+      if (Array.isArray(response.data)) setBacklog(response.data);
+      else throw new Error('not logged in');
+    })
     .catch(err => console.log(err))
   }
 
   function getCompleted() {
     axios.get('/api/library/getCompleted')
-    .then(response => setCompleted(response.data))
+    .then(response => {
+      if (Array.isArray(response.data)) setBacklog(response.data);
+      else throw new Error('not logged in');
+    })
     .catch(err => console.log(err))
   }
 
@@ -55,15 +64,15 @@ const Library= () => {
     <div className="library">
       <div className="library-category backlog">
         <h2>Backlog</h2>
-        {backlog ? backlog.map((game,index) => <GameCard game={game} key={index} libraryCard={handleChange} />) : <></>}
+        {backlog.length > 0 ? backlog.map((game,index) => <GameCard game={game} key={index} libraryCard={handleChange} />) : <></>}
       </div>
       <div className="library-category playing">
         <h2>Currently Playing</h2>
-        {playing ? playing.map((game,index) => <GameCard game={game} key={index} libraryCard={handleChange} />) : <></>}
+        {playing.length > 0 ? playing.map((game,index) => <GameCard game={game} key={index} libraryCard={handleChange} />) : <></>}
       </div>
       <div className="library-category completed">
         <h2>Completed</h2>
-      {completed ? completed.map((game,index) => <GameCard game={game} key={index} libraryCard={handleChange} />) : <></>}
+      {completed.length > 0 ? completed.map((game,index) => <GameCard game={game} key={index} libraryCard={handleChange} />) : <></>}
       </div>
     </div>
   )
