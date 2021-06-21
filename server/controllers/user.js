@@ -120,7 +120,6 @@ exports.add = (req, res) => {
       user.library.push(newGame);
       user.save((err) => {
         if (err) res.status(400);
-        console.log('success!');
         res.end();
       })
     }
@@ -137,11 +136,10 @@ exports.update = (req, res) => {
     }
     if (user === null) res.send('Not logged in');
     else {
-      let updateGame = user.library.id(id);
-      updateGame.set(updateGame.status = status)
+      let updateGame = user.library.filter((game) => game.id === id);
+      updateGame[0].status = status;
       user.save((err) => {
         if (err) res.status(400);
-        console.log('success!');
         res.end();
       })
     }
@@ -156,10 +154,10 @@ exports.delete = (req, res) => {
     }
     if (user === null) res.send('Not logged in');
     else {
+      user.library.filter((game) => game.id === id).remove();
       user.library.id(id).remove();
       user.save((err) => {
         if (err) res.status(400);
-        console.log('success!');
         res.end();
       })
     }
