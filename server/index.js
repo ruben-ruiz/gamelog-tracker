@@ -95,7 +95,7 @@ app.put('/api/library', (req, res) => {;
 })
 
 app.delete('/api/library', (req, res) => {
-  user_controller.delete(req.query, res);
+  user_controller.delete(req, res);
 })
 
 app.get('/api/library/:status', (req, res) => {

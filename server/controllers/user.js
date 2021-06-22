@@ -147,19 +147,25 @@ exports.update = (req, res) => {
 };
 
 exports.delete = (req, res) => {
+  let { id } = req.query;
   let userId = req.session.userId;
-  User.findById(userId, (err, user) => {
-    if (err) {
-      res.send(err);
-    }
-    if (user === null) res.send('Not logged in');
-    else {
-      user.library.filter((game) => game.id === id).remove();
-      user.library.id(id).remove();
-      user.save((err) => {
-        if (err) res.status(400);
-        res.end();
-      })
-    }
-  })
+
+  User.updateOne({ _id: userId },
+    { $pull: { library: { $in: [{ id: id }] } } })
+
+  // User.findById(userId, (err, user) => {
+  //   if (err) {
+  //     res.send(err);
+  //   }
+  //   if (user === null) res.send('Not logged in');
+  //   else {
+  //     let removeGames = user.library.filter((game) => game.id === id);
+
+  //     user.save((err) => {
+  //       if (err) res.status(400);
+  //       console.log('successfully deleted game');
+  //       res.end();
+  //     })
+  //   }
+  // })
 };
