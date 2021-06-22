@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import GameCard from './GameCard.jsx';
 import axios from 'axios';
 
-const Library= () => {
+const Library= ({isLoggedIn}) => {
   const [backlog, setBacklog] = useState([]);
   const [playing, setPlaying] = useState([]);
   const [completed, setCompleted] = useState([]);
@@ -35,10 +35,12 @@ const Library= () => {
   }
 
   const getLibrary = React.useCallback(() => {
-    getBacklog();
-    getPlaying();
-    getCompleted();
-  }, []);
+    if (isLoggedIn === true) {
+      getBacklog();
+      getPlaying();
+      getCompleted();
+    } else return;
+  }, [isLoggedIn]);
 
   useEffect(() => {
     getLibrary();
@@ -62,6 +64,8 @@ const Library= () => {
 
   return (
     <div className="library">
+      {isLoggedIn ?
+      <>
       <div className="library-category backlog">
         <h2>Backlog</h2>
         {backlog ? backlog.map((game,index) => <GameCard game={game} key={index} libraryCard={handleChange} />) : <></>}
@@ -74,6 +78,9 @@ const Library= () => {
         <h2>Completed</h2>
         {completed ? completed.map((game,index) => <GameCard game={game} key={index} libraryCard={handleChange} />) : <></>}
       </div>
+      </> :
+      <div style={{color: 'white'}}>Login to view your library</div>
+      }
     </div>
   )
 }

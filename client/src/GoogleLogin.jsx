@@ -41,14 +41,13 @@ function Login( { checkLogin }) {
 
   return (
     <GoogleLogin
-      className="google-auth"
       clientId={clientId}
       buttonText="Login"
       onSuccess={responseSuccessGoogle}
       onFailure={responseFailureGoogle}
       cookiePolicy={'single_host_origin'}
       render={renderProps => (
-        <button onClick={renderProps.onClick} style={inStyle}>Login</button>
+        <button className="login-btn" onClick={renderProps.onClick} style={inStyle}>Login</button>
       )}
       isSignedIn={true}
       />
