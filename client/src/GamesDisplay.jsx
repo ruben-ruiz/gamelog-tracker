@@ -23,6 +23,7 @@ const GamesDisplay = ({games}) => {
           if (game) {
             for (let i = 0; i < backlog.length; i++) {
               if (backlog[i].id === game.id) {
+                game._id = backlog[i]._id;
                 game.status = backlog[i].status;
                 return <GameCard game={game} key={index}/>
               }

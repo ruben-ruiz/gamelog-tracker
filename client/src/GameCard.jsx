@@ -56,7 +56,7 @@ const GameCard = ({game, libraryCard}) => {
     } else if (selected === 'Remove') {
       axios.delete('/api/library', {
         params: {
-          id: game.id
+          id: game._id
         }
       })
       .then(setStatus(selected))
