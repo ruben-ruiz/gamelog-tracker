@@ -204,7 +204,7 @@ body {
 }
 
 .library-category h2 {
-  border-bottom: 3px white solid;
+  /* border-bottom: 3px white solid; */
   width: 100%;
   color: white;
   text-align: center;
@@ -212,10 +212,10 @@ body {
   font-size: 4rem;
 }
 
-.playing {
+/* .playing {
   border-left: 5px white solid;
   border-right: 5px white solid;
-}
+} */
 
 .library-category .card {
   width: 65%;
