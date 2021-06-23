@@ -5,7 +5,7 @@ const session = require('express-session');
 const cors = require('cors');
 const axios = require('axios');
 const app = express();
-const port = 5000;
+// const port = 5000;
 const db = require('../database');
 // const game_controller = require('./controllers/game.js');
 const user_controller = require('./controllers/user.js');
@@ -20,7 +20,7 @@ let ax = axios.create({
 
 app.use(express.json());
 app.use(cors());
-// app.use(express.static('client/build'));
+app.use(express.static('client/build'));
 
 // session
 app.use(session({
@@ -123,4 +123,4 @@ app.get('/api/platforms', (req, res) => {
   })
 })
 
-app.listen(port, () => { console.log(`server listening on port ${port} `)});
+app.listen(port, () => { console.log(`server listening on port ${process.env.PORT} `)});
