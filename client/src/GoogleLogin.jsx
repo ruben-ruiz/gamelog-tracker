@@ -30,11 +30,12 @@ function Login( { checkLogin }) {
   };
 
   const inStyle = {
-    width: '4rem',
+    // width: '4rem',
+    marginLeft: '0.5rem',
     outline: 'none',
     color: 'white',
     background: 'none',
-    fontSize: '1.5rem',
+    fontSize: '1.8rem',
     border: 'none',
     cursor: 'pointer',
   };

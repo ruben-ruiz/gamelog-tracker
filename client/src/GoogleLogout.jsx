@@ -21,7 +21,7 @@ function GoogleLogout({ checkLogin, userImage }) {
 
   return (
     <Dropdown isOpen={dropdownOpen} toggle={toggle} className="logout-dropdown">
-      <DropdownToggle caret>
+      <DropdownToggle>
         <img className='profileImg' src={userImage} alt="User Avatar" />
       </DropdownToggle>
       <DropdownMenu>

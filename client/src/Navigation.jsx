@@ -18,7 +18,7 @@ const Navigation = ({ userImage, isLoggedIn, checkLogin }) => {
 
   return (
     <Navbar expand="md">
-      <NavbarBrand href="/">Game Tracker</NavbarBrand>
+      <NavbarBrand href="/">Gamelog Tracker</NavbarBrand>
       <NavbarToggler onClick={toggle} />
       <Collapse isOpen={isOpen} navbar>
         <Nav className="mr-auto" navbar>
