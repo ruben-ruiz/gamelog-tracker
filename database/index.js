@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const url = 'mongodb://localhost/games';
+const url = `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PW}@${process.env.MONGO_URI}/myFirstDatabase?retryWrites=true&w=majority`;
 
 mongoose.connect(url, {useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true});
 
