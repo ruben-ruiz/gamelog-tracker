@@ -123,4 +123,4 @@ app.get('/api/platforms', (req, res) => {
   })
 })
 
-app.listen(port, () => { console.log(`server listening on port ${process.env.PORT} `)});
+app.listen(process.env.PORT, () => { console.log(`server listening on port ${process.env.PORT} `)});
