@@ -35,14 +35,6 @@ app.use(session({
   }
 }));
 
-// for Heroku Deployment
-app.get("*", (req, res) => {
-  let url = path.join(__dirname, '../client/build', 'index.html');
-  if (!url.startsWith('/app/')) // since we're on local windows
-    url = url.substring(1);
-  res.sendFile(url);
-});
-
 app.post('/api/googlelogin', (req, res) => {
   user_controller.googlelogin(req, res);
 })
@@ -131,5 +123,13 @@ app.get('/api/platforms', (req, res) => {
     res.send(err);
   })
 })
+
+// for Heroku Deployment
+app.get("*", (req, res) => {
+  let url = path.join(__dirname, '../client/build', 'index.html');
+  if (!url.startsWith('/app/')) // since we're on local windows
+    url = url.substring(1);
+  res.sendFile(url);
+});
 
 app.listen(process.env.PORT, () => { console.log(`server listening on port ${process.env.PORT} `)});
