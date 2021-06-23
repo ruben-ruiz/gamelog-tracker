@@ -35,6 +35,10 @@ app.use(session({
   }
 }));
 
+// app.get("*", (req, res) => {
+//   res.sendFile(path.resolve(__dirname,  "../client/build", "index.html"));
+// });
+
 app.post('/api/googlelogin', (req, res) => {
   user_controller.googlelogin(req, res);
 })
