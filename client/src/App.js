@@ -25,7 +25,6 @@ function App() {
   return (
     <div className="App">
       <Navigation userImage={userImage} isLoggedIn={isLoggedIn} checkLogin={checkLogin} />
-      {/* {isLoggedIn ? path === '/library' ? <Library /> : <Main /> : <Main />} */}
       {path === '/library' ? <Library isLoggedIn={isLoggedIn} /> : <Main isLoggedIn={isLoggedIn} />}
     </div>
   );

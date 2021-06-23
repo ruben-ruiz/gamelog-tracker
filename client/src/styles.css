@@ -178,6 +178,17 @@ body {
 .library {
   display: flex;
   justify-content: space-between;
+  position: relative;
+  min-height: 100vh;
+}
+
+.library-notLoggedIn {
+  color: white;
+  font-size: 8rem;
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .library-category {

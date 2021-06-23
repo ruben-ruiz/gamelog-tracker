@@ -79,7 +79,7 @@ const Library= ({isLoggedIn}) => {
         {completed ? completed.map((game,index) => <GameCard game={game} key={index} libraryCard={handleChange} />) : <></>}
       </div>
       </> :
-      <div style={{color: 'white'}}>Login to view your library</div>
+      <div className="library-notLoggedIn">Login to view your library</div>
       }
     </div>
   )
