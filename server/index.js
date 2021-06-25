@@ -6,9 +6,7 @@ const cors = require('cors');
 const axios = require('axios');
 const app = express();
 const path = require('path');
-// const port = 5000;
 const db = require('../database');
-// const game_controller = require('./controllers/game.js');
 const user_controller = require('./controllers/user.js');
 
 let ax = axios.create({

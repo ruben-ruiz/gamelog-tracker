@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const gameSchema = new mongoose.Schema({
   id: {
     type: Number,
-    unique: true,
+    // unique: true,
     required: [true, "id required."],
   },
   slug: String,
@@ -15,9 +15,5 @@ const gameSchema = new mongoose.Schema({
   genres: String,
   status: String
 });
-
-// const Game = mongoose.model('Game', gameSchema);
-
-// module.exports = Game;
 
 module.exports = gameSchema;
