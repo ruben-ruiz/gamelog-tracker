@@ -1,12 +1,12 @@
 require('dotenv').config();
 const express = require('express');
-// const router = express.Router()
+const router = express.Router()
 const session = require('express-session');
 const cors = require('cors');
 const axios = require('axios');
 const app = express();
 const path = require('path');
-// const db = require('../database');
+const db = require('../database');
 const user_controller = require('./controllers/user.js');
 const keepAlive = require('./startKeepAlive.js');
 
