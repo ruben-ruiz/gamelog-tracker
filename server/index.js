@@ -1,18 +1,14 @@
 require('dotenv').config();
 const express = require('express');
-// const router = express.Router()
+const router = express.Router()
 const session = require('express-session');
 const cors = require('cors');
 const axios = require('axios');
 const app = express();
 const path = require('path');
-// const db = require('../database');
+const db = require('../database');
 const user_controller = require('./controllers/user.js');
 var http = require("http");
-
-setInterval(function() {
-    http.get("https://gamelog-tracker.herokuapp.com");
-}, 300000); // every 5 minutes (300000)
 
 let ax = axios.create({
   baseURL: 'https://api.rawg.io/api',
@@ -134,5 +130,9 @@ app.get("*", (req, res) => {
     url = url.substring(1);
   res.sendFile(url);
 });
+
+setInterval(function() {
+  http.get("https://gamelog-tracker.herokuapp.com");
+}, 300000); // every 5 minutes (300000)
 
 app.listen(process.env.PORT, () => { console.log(`server listening on port ${process.env.PORT} `)});
