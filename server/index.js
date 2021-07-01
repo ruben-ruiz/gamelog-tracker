@@ -8,7 +8,6 @@ const app = express();
 const path = require('path');
 const db = require('../database');
 const user_controller = require('./controllers/user.js');
-const keepAlive = require('./startKeepAlive.js');
 
 let ax = axios.create({
   baseURL: 'https://api.rawg.io/api',
@@ -130,7 +129,5 @@ app.get("*", (req, res) => {
     url = url.substring(1);
   res.sendFile(url);
 });
-
-keepAlive();
 
 app.listen(process.env.PORT, () => { console.log(`server listening on port ${process.env.PORT} `)});
