@@ -29,10 +29,10 @@ I forgot I had this game in my backlog! What games did I start but haven't compl
 To clone and run this application, you'll need Git and Node.js (which comes with npm) installed on your computer. From your command line:
 ```
 # Clone this repository
-$ git clone https://github.com/ruben-ruiz/andesbookclub.git
+$ git clone https://github.com/ruben-ruiz/gamelog-tracker.git
 
 # Go into the repository
-$ cd andesbookclub
+$ cd gamelog-tracker
 
 # Install dependencies
 $ npm install
